@@ -2,13 +2,14 @@
 
   <arg name="rviz" default="true" />
 
-  <node pkg="livox_mapping" type="loam_scanRegistration" name="scanRegistration" output="screen">
+  <node pkg="livox_mapping" type="loam_scanRegistration" name="scanRegistration" output="screen" >
   </node>
 
   <node pkg="livox_mapping" type="loam_laserMapping" name="laserMapping" output="screen">
   <param name="map_file_path" type="string" value=" " />
   <param name="filter_parameter_corner" type="double" value="0.1" />
   <param name="filter_parameter_surf" type="double" value="0.2" />
+   <param name="map_file_path" value="/home/marcus/LivoxMapping/" />
   </node>
 
   <group if="$(arg rviz)">
