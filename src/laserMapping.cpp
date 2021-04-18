@@ -36,7 +36,8 @@
 #include <math.h>
 
 #include <nav_msgs/Odometry.h>
-#include <opencv/cv.h>
+//#include <opencv2/cv.h>
+#include "opencv2/opencv.hpp"
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
@@ -402,7 +403,7 @@ int main(int argc, char** argv)
 
     ros::Publisher pubOdomAftMapped = nh.advertise<nav_msgs::Odometry> ("/aft_mapped_to_init", 1);
     nav_msgs::Odometry odomAftMapped;
-    odomAftMapped.header.frame_id = "/camera_init";
+    odomAftMapped.header.frame_id = "camera_init";
     odomAftMapped.child_frame_id = "/aft_mapped";
 
     std::string map_file_path;
@@ -1117,13 +1118,13 @@ int main(int argc, char** argv)
             sensor_msgs::PointCloud2 laserCloudSurround3;
             pcl::toROSMsg(*laserCloudSurround2, laserCloudSurround3);
             laserCloudSurround3.header.stamp = ros::Time().fromSec(timeLaserCloudCornerLast);
-            laserCloudSurround3.header.frame_id = "/camera_init";
+            laserCloudSurround3.header.frame_id = "camera_init";
             pubLaserCloudSurround.publish(laserCloudSurround3);
 
             sensor_msgs::PointCloud2 laserCloudSurround3_corner;
             pcl::toROSMsg(*laserCloudSurround2_corner, laserCloudSurround3_corner);
             laserCloudSurround3_corner.header.stamp = ros::Time().fromSec(timeLaserCloudCornerLast);
-            laserCloudSurround3_corner.header.frame_id = "/camera_init";
+            laserCloudSurround3_corner.header.frame_id = "camera_init";
             pubLaserCloudSurround_corner.publish(laserCloudSurround3_corner);
             
 
@@ -1141,7 +1142,7 @@ int main(int argc, char** argv)
             sensor_msgs::PointCloud2 laserCloudFullRes3;
             pcl::toROSMsg(*laserCloudFullResColor, laserCloudFullRes3);
             laserCloudFullRes3.header.stamp = ros::Time().fromSec(timeLaserCloudCornerLast);
-            laserCloudFullRes3.header.frame_id = "/camera_init";
+            laserCloudFullRes3.header.frame_id = "camera_init";
             pubLaserCloudFullRes.publish(laserCloudFullRes3);
 
             *laserCloudFullResColor_pcd += *laserCloudFullResColor;
@@ -1171,7 +1172,7 @@ int main(int argc, char** argv)
             q.setY( odomAftMapped.pose.pose.orientation.y );
             q.setZ( odomAftMapped.pose.pose.orientation.z );
             transform.setRotation( q );
-            br.sendTransform( tf::StampedTransform( transform, odomAftMapped.header.stamp, "/camera_init", "/aft_mapped" ) );
+            br.sendTransform( tf::StampedTransform( transform, odomAftMapped.header.stamp, "camera_init", "/aft_mapped" ) );
 
             kfNum++;
 
@@ -1193,10 +1194,10 @@ int main(int argc, char** argv)
         rate.sleep();
     }
     //--------------------------save map---------------
-    std::string surf_filename(map_file_path + "/surf.pcd");
-    std::string corner_filename(map_file_path + "/corner.pcd");
-    std::string all_points_filename(map_file_path + "/all_points.pcd");
-    std::ofstream keyframe_file(map_file_path + "/key_frame.txt");
+    std::string surf_filename(map_file_path + "surf.pcd");
+    std::string corner_filename(map_file_path + "corner.pcd");
+    std::string all_points_filename(map_file_path + "all_points.pcd");
+    std::ofstream keyframe_file(map_file_path + "key_frame.txt");
     for(auto kf : keyframe_pose){
         keyframe_file << kf[0] << " "<< kf[1] << " "<< kf[2] << " "<< kf[3] << " "
                           << kf[4] << " "<< kf[5] << " "<< kf[6] << " "<< std::endl;
