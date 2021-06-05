@@ -938,6 +938,8 @@ int main(int argc, char** argv)
                         continue;
                     }
 
+                    std::cout << "DEBUG: selected optmiaztion points: " << laserCloudSelNum << std::endl;
+
 
                     //|c1c3+s1s2s3 c3s1s2-c1s3 c2s1|
                     //|   c2s3        c2c3      -s2|

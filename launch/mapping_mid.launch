@@ -3,6 +3,7 @@
   <arg name="rviz" default="true" />
 
   <node pkg="livox_mapping" type="loam_scanRegistration" name="scanRegistration" output="screen" >
+  <!-- <remap from="livox/lidar" to="livox/lidar_rotated" /> -->
   </node>
 
   <node pkg="livox_mapping" type="loam_laserMapping" name="laserMapping" output="screen">
