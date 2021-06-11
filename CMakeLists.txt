@@ -52,3 +52,5 @@ target_link_libraries(loam_scanRegistration_horizon ${catkin_LIBRARIES} ${PCL_LI
 add_executable(loam_laserMapping src/laserMapping.cpp)
 target_link_libraries(loam_laserMapping ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBS})
 
+add_dependencies(livox_repub livox_ros_driver_generate_messages_cpp)
+
