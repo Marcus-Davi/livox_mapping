@@ -444,7 +444,7 @@ int main(int argc, char** argv)
         laserCloudCornerArray2[i].reset(new pcl::PointCloud<PointType>());
         laserCloudSurfArray2[i].reset(new pcl::PointCloud<PointType>());
     }
-
+    clock_t total_accumulated_time = {0};
 //------------------------------------------------------------------------------------------------------
     ros::Rate rate(100);
     bool status = ros::ok();
@@ -830,9 +830,12 @@ int main(int argc, char** argv)
                                                     * ((x0 - x1)*(z0 - z2) - (x0 - x2)*(z0 - z1))
                                                     + ((y0 - y1)*(z0 - z2) - (y0 - y2)*(z0 - z1))
                                                     * ((y0 - y1)*(z0 - z2) - (y0 - y2)*(z0 - z1)));
+                                // cross
 
+                                //
                                 float l12 = sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2) + (z1 - z2)*(z1 - z2));
 
+                                //TODO linearization ?
                                 float la = ((y1 - y2)*((x0 - x1)*(y0 - y2) - (x0 - x2)*(y0 - y1))
                                             + (z1 - z2)*((x0 - x1)*(z0 - z2) - (x0 - x2)*(z0 - z1))) / a012 / l12;
 
@@ -1186,8 +1189,12 @@ int main(int argc, char** argv)
             }
 
             t4 = clock();
-
-            std::cout<<"mapping time : "<<t2-t1<<" "<<t3-t2<<" "<<t4-t3<<std::endl;
+            
+            std::cout << "mapping time : "<<t2-t1<<" "<<t3-t2<<" "<<t4-t3<<std::endl;
+            std::cout << "Total iteration computation: " << (float)(t4 - t1) / CLOCKS_PER_SEC << std::endl;
+            total_accumulated_time += (t4-t1);
+            std::cout << "Total accumulated computation: " << (float)(total_accumulated_time) / CLOCKS_PER_SEC << std::endl;
+            
 
             
         }
